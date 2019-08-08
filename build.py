@@ -7,21 +7,21 @@ from bincrafters import build_template_default
 
 def _is_dynamic_msvc_build(build):
     if build.options['quantlib:shared'] == True and build.settings['compiler'] == 'Visual Studio':
-        return False
-    else:
         return True
+    else:
+        return False
 
 def _is_not_md(build):
     if build.settings['compiler'] == 'Visual Studio' and build.settings['compiler.runtime'] != 'MD':
-        return False
-    else:
         return True
+    else:
+        return False
 
 def _is_incompatible_gcc(build):
     if build.settings['compiler'] == 'gcc' and build.settings['compiler.version'] == '9' and build.settings['compiler.libcxx'] == 'libstdc++':
-        return False
-    else:
         return True
+    else:
+        return False
 
 if __name__ == "__main__":
 

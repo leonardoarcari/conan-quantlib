@@ -35,7 +35,7 @@ class LibnameConan(ConanFile):
             del self.options.fPIC
 
     def source(self):
-        sha256='F9D78B60F9BEA2A710AF6C19E0B904A650A9C1B146ACB65D130FF2A6E8434780'
+        sha256='c8d457e7605c443b3b60a010d8e3662676c2f77872e47a08cbc91c77064a7add'
         source_url = "https://github.com/lballabio/QuantLib"
         tools.get("{0}/archive/QuantLib-v{1}.tar.gz".format(source_url, self.version), sha256=sha256)
         extracted_dir = self.name + "-" + self.version

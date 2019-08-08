@@ -81,6 +81,8 @@ endif()''')
 
     def build(self):
         cmake = self._configure_cmake()
+        if self.settings['compiler'] == 'gcc':
+            cmake.definitions['CMAKE_CXX_FLAGS'] = '-Wno-deprecated'
         target = self._get_target_name()
         cmake.build(target=target)
 
@@ -113,7 +115,7 @@ endif()''')
                 ql_lib_toolset = '-vc141'
             elif self.settings.compiler.version == "14":
                 ql_lib_toolset = '-vc140'
-            elif self.settings.compiler.version == "13":
+            elif self.settings.compiler.version == "12":
                 ql_lib_toolset = '-vc120'
             elif self.settings.compiler.version == "11":
                 ql_lib_toolset = '-vc110'

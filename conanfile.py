@@ -76,14 +76,13 @@ endif()''')
 
     def _configure_cmake(self):
         cmake = CMake(self)
+        if self.settings.compiler == 'gcc':
+            cmake.definitions['CMAKE_CXX_FLAGS'] = '-Wno-deprecated-declarations -Wno-deprecated'
         cmake.configure(build_folder=self._build_subfolder)
         return cmake
 
     def build(self):
         cmake = self._configure_cmake()
-        if self.settings.compiler == 'gcc':
-            cmake.definitions['CMAKE_CXX_FLAGS'] = '-Wno-deprecated'
-            cmake.definitions['CMAKE_CXX_FLAGS'] = '-Wno-deprecated-declarations'
         target = self._get_target_name()
         cmake.build(target=target)
 

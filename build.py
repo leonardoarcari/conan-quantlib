@@ -18,7 +18,7 @@ def _is_not_md(build):
         return True
 
 def _is_incompatible_gcc(build):
-    if build.settings['compiler'] == 'gcc' and build.settings['compiler.version'] == '9' and build.settings['compiler.libcxx'] = 'libstdc++':
+    if build.settings['compiler'] == 'gcc' and build.settings['compiler.version'] == '9' and build.settings['compiler.libcxx'] == 'libstdc++':
         return False
     else:
         return True
@@ -32,6 +32,6 @@ if __name__ == "__main__":
     # Filter out non dynamic, release runtime for Visual Studio
     builder.remove_build_if(_is_not_md)
     # Filter out incompatible GCC
-    build.remove_build_if(is_incompatible_gcc)
+    builder.remove_build_if(_is_incompatible_gcc)
 
     builder.run()

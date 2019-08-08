@@ -41,10 +41,6 @@ class LibnameConan(ConanFile):
         extracted_dir = 'QuantLib-QuantLib-v' + self.version
         prefix = extracted_dir + '/'
 
-        tools.replace_in_file(prefix + "CMakeLists.txt", "project(QuantLib)",
-                              '''project(QuantLib)
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()''')
         # Do not build Examples nor unit tests
         tools.replace_in_file(prefix + "CMakeLists.txt",
                               "add_subdirectory(Examples)", "")

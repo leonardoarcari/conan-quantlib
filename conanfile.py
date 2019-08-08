@@ -38,7 +38,7 @@ class LibnameConan(ConanFile):
         sha256='c8d457e7605c443b3b60a010d8e3662676c2f77872e47a08cbc91c77064a7add'
         source_url = "https://github.com/lballabio/QuantLib"
         tools.get("{0}/archive/QuantLib-v{1}.tar.gz".format(source_url, self.version), sha256=sha256)
-        extracted_dir = 'QuantLib-QuantLib' + "-" + self.version
+        extracted_dir = 'QuantLib-QuantLib-v' + self.version
         prefix = extracted_dir + '/'
 
         tools.replace_in_file(prefix + "CMakeLists.txt", "project(QuantLib)",

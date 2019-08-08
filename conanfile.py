@@ -83,6 +83,7 @@ endif()''')
         cmake = self._configure_cmake()
         if self.settings.compiler == 'gcc':
             cmake.definitions['CMAKE_CXX_FLAGS'] = '-Wno-deprecated'
+            cmake.definitions['CMAKE_CXX_FLAGS'] = '-Wno-deprecated-declarations'
         target = self._get_target_name()
         cmake.build(target=target)
 

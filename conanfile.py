@@ -40,23 +40,26 @@ class LibnameConan(ConanFile):
         tools.get("{0}/archive/QuantLib-v{1}.tar.gz".format(source_url, self.version), sha256=sha256)
         extracted_dir = self.name + "-" + self.version
 
-        tools.replace_in_file("CMakeLists.txt", "project(QuantLib)",
+        print(extracted_dir)
+        prefix = 'QuantLib-QuantLib-v1.15/'
+
+        tools.replace_in_file(prefix + "CMakeLists.txt", "project(QuantLib)",
                               '''project(QuantLib)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()''')
         # Do not build Examples nor unit tests
-        tools.replace_in_file("CMakeLists.txt",
+        tools.replace_in_file(prefix + "CMakeLists.txt",
                               "add_subdirectory(Examples)", "")
-        tools.replace_in_file("CMakeLists.txt",
+        tools.replace_in_file(prefix + "CMakeLists.txt",
                               "add_subdirectory(test-suite)", "")
         # Fix multiple macro definition warning in config.msvc.hpp
-        tools.replace_in_file('ql/config.msvc.hpp', '#define BOOST_ALL_NO_LIB',
+        tools.replace_in_file(prefix + 'ql/config.msvc.hpp', '#define BOOST_ALL_NO_LIB',
                               '''#ifndef BOOST_ALL_NO_LIB
                                  #define BOOST_ALL_NO_LIB
                                  #endif
                               ''')
         # Turn on debugging symbols also in all build types
-        tools.replace_in_file('ql/CMakeLists.txt', 'set(QL_LINK_LIBRARY ${QL_OUTPUT_NAME} PARENT_SCOPE)',
+        tools.replace_in_file(prefix + 'ql/CMakeLists.txt', 'set(QL_LINK_LIBRARY ${QL_OUTPUT_NAME} PARENT_SCOPE)',
         '''set(QL_LINK_LIBRARY ${QL_OUTPUT_NAME} PARENT_SCOPE)
 # Always turn debugging symbols on
 target_compile_options(${QL_OUTPUT_NAME} PRIVATE
@@ -79,7 +82,7 @@ endif()''')
 
     def _configure_cmake(self):
         cmake = CMake(self)
-        cmake.configure(source_folder=self._source_subfolder, build_folder=self._build_subfolder)
+        cmake.configure(build_folder=self._build_subfolder)
         return cmake
 
     def build(self):

@@ -18,10 +18,19 @@ def _is_not_md(build):
         return False
 
 def _is_incompatible_gcc(build):
-    if build.settings['compiler'] == 'gcc' and build.settings['compiler.version'] == '9' and build.settings['compiler.libcxx'] == 'libstdc++':
+    if build.settings['compiler'] == 'gcc' and build.settings['compiler.version'] in ['5', '6', '7', '8'] and build.settings['compiler.libcxx'] == 'libstdc++':
         return True
     else:
         return False
+
+def _is_incompatible_clang(build):
+    if build.settings['compiler'] == 'clang' and build.settings['compiler.version'] in ['3.9', '7', '8'] and build.settings['compiler.libcxx'] == 'libstdc++':
+        return True
+    else:
+        return False
+
+def _is_shared(build):
+    return build.options['quantlib:shared'] == True
 
 if __name__ == "__main__":
 
@@ -33,5 +42,9 @@ if __name__ == "__main__":
     builder.remove_build_if(_is_not_md)
     # Filter out incompatible GCC
     builder.remove_build_if(_is_incompatible_gcc)
+    # Filter out incompatible Clang
+    builder.remove_build_if(_is_incompatible_clang)
+    # Filter out shared library (for now)
+    builder.remove_build_if(_is_shared)
 
     builder.run()
